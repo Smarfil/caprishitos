@@ -11,6 +11,11 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.card-img-top{
+    object-fit: contain;
+    height: 180px;
+}
+
 .product-list-view .product-card {
     display: block;
 }
@@ -18,4 +23,23 @@ body {
 .product-grid-view .product-card {
     display: inline-block;
     width: 100%;
+}
+
+.product-list-view {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-list-view .card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
+.product-list-view .card img {
+    width: 80px; /* Ajusta según tu preferencia */
+    height: auto;
+    margin-right: 15px;
 }
