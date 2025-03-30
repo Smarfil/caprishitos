@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Caprishitos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #7300b6;
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        h1{
+            margin: 0px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        select {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #555;
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                font-size: 1.2rem;
+            }
+
+            select {
+                font-size: 0.9rem;
+            }
+
+            li {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lista Caprishitos</h1>
+    </header>
+    <div class="container">
+        <label for="typeFilter">Filtrar por tipo de objeto:</label>
+        <select id="typeFilter">
+            <option value="all">Todos</option>
+        </select>
+
+        <label for="originFilter">Filtrar por origen:</label>
+        <select id="originFilter">
+            <option value="all">Cualquiera</option>
+        </select>
+
+        <ul id="productList">
+            <!-- Products will be dynamically populated here -->
+        </ul>
+
+        <p id="noResultsMessage" class="no-results" style="display: none;">No hay resultados con los filtros seleccionados.</p>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Nazgul Calendario Perpetuo 3D", type: "Figura de acción", origin: "El señor de los anillos" },
+            { name: '"Rechicero" editorial Debolsillo (novela Mundodisco)', type: "Libro", origin: "Terry Pratchett" },
+            { name: '"Brujerías" editorial Debolsillo (novela Mundodisco)', type: "Libro", origin: "Terry Pratchett" },
+            { name: '"Pirómides" editorial Debolsillo (novela Mundodisco)', type: "Libro", origin: "Terry Pratchett" },
+            { name: 'Vivi 28cm aprox.', type: "Peluche", origin: "Final Fantasy IX" },
+            { name: "Gen asagiri", type: "Figura de acción", origin: "Dr. Stone" },
+            { name: "Señor de los Nazgul / Rey Brujo", type: "Figura de acción", origin: "El señor de los anillos" },
+            { name: "Brook", type: "Figura de acción", origin: "One Piece" },
+            { name: "Suika", type: "Figura de acción", origin: "Dr. Stone" },
+            { name: "La herencia de la tía Ágata", type: "Juego de mesa", origin: "Bizak" },
+            { name: "El señor de los anillos: Aventura hacia el Monte del Destino", type: "Juego de mesa", origin: "Devir" },
+            { name: "Pyramid Head", type: "Figura de acción", origin: "Silent Hill 2" },
+            { name: "Qiqi", type: "Figura de acción", origin: "Genshin Impact" },
+            { name: "Vamos a pegarnos con espadas de mentira", type: "Juego de mesa", origin: "Exploding Kittens" },
+            { name: "Yo Soy Tu Peli", type: "Juego de mesa", origin: "HelloFun!" },
+            { name: "¿Quién es quién? Super Mario", type: "Juego de mesa", origin: "¿Quién es quién?" },
+            { name: 'Elemento electro o dendro (grande 50cm)', type: "Peluche", origin: "Genshin Impact" },
+            { name: "Animal Crossing: New Horizons", type: "Videojuego", origin: "Nintendo Switch" },
+            { name: "Zelda: Breath of the wild", type: "Videojuego", origin: "Nintendo Switch" },
+            { name: "Street Fighter VI", type: "Videojuego", origin: "Xbox Series X" },
+            { name: "The Boys (cómic de Garth Ennis y Darick Robertson)", type: "Cómic", origin: "Garth Ennis, Darick Robertson" },
+            { name: "Piratas del Caribe: La maldición de la perla negra", type: "Blu-ray", origin: "Película" },
+            { name: "Piratas del Caribe: El cofre del hombre muerto", type: "Blu-ray", origin: "Película" },
+            { name: "Piratas del Caribe: En el fin del mundo", type: "Blu-ray", origin: "Película" },
+            { name: "El color de la magia", type: "Blu-ray", origin: "Mini serie de Vadim Jean" },
+            { name: "Nintendo Switch Sports", type: "Videojuego", origin: "Nintendo Switch" },
+            { name: "Paper Mario: La puerta milenaria", type: "Videojuego", origin: "Nintendo Switch" },
+            { name: "Asesinato en el Orient Express", type: "Blu-ray", origin: "Película de 1974" },
+            { name: "Alan Wake II DLC", type: "Videojuego", origin: "Xbox Series X" },
+            { name: "Clásicos", type: "Blu-ray", origin: "Película" },
+            { name: "Voces en la oscuridad (manga de Junji Ito)", type: "Cómic", origin: "Junji Ito" },
+            { name: "Black Paradox (manga de Junji Ito)", type: "Cómic", origin: "Junji Ito" },
+            { name: "Akira", type: "Blu-ray", origin: "Anime" },
+            { name: "Noir", type: "Blu-ray", origin: "Anime" },
+            { name: "InuYasha", type: "Blu-ray", origin: "Anime" },
+            { name: "Yu Yu Hakusho", type: "Blu-ray", origin: "Anime" },
+            { name: "Ranma 1/2", type: "Blu-ray", origin: "Anime" },
+            { name: "Slam Dunk", type: "Blu-ray", origin: "Anime" },
+            { name: "Sakura Card Captor", type: "Blu-ray", origin: "Anime" },
+            { name: "Utena", type: "Blu-ray", origin: "Anime" },
+            { name: "Elfen Lied", type: "Blu-ray", origin: "Anime" },
+            { name: "DaVinci Resolve Studio", type: "Software", origin: "Licencia" },
+            { name: "EX270QM", type: "Pantalla", origin: "Marca BenQ" },
+        ];
+
+        const typeFilter = document.getElementById("typeFilter");
+        const originFilter = document.getElementById("originFilter");
+        const productList = document.getElementById("productList");
+        const noResultsMessage = document.getElementById("noResultsMessage");
+
+        // Populate filter options dynamically
+        function populateFilters() {
+            const types = new Set(products.map(product => product.type));
+            const origins = new Set(products.map(product => product.origin));
+
+            types.forEach(type => {
+                const option = document.createElement("option");
+                option.value = type;
+                option.textContent = type;
+                typeFilter.appendChild(option);
+            });
+
+            origins.forEach(origin => {
+                const option = document.createElement("option");
+                option.value = origin;
+                option.textContent = origin;
+                originFilter.appendChild(option);
+            });
+        }
+
+        // Display products based on filters
+        function displayProducts() {
+            const type = typeFilter.value;
+            const origin = originFilter.value;
+
+            productList.innerHTML = "";
+
+            const filteredProducts = products.filter(product => {
+                return (type === "all" || product.type === type) &&
+                       (origin === "all" || product.origin === origin);
+            });
+
+            if (filteredProducts.length === 0) {
+                noResultsMessage.style.display = "block";
+            } else {
+                noResultsMessage.style.display = "none";
+                filteredProducts.forEach(product => {
+                    const li = document.createElement("li");
+
+                    let productText = product.name;
+                    if (type === "all") {
+                        productText = `${product.type}: ${productText}`;
+                    }
+                    if (origin === "all") {
+                        productText = `${productText} (${product.origin})`;
+                    }
+
+                    li.textContent = productText;
+                    productList.appendChild(li);
+                });
+            }
+        }
+
+        // Initialize the app
+        function init() {
+            populateFilters();
+            displayProducts();
+            
+            typeFilter.addEventListener("change", displayProducts);
+            originFilter.addEventListener("change", displayProducts);
+        }
+
+        init();
+    </script>
+</body>
+</html>
