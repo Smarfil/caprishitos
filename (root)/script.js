@@ -30,7 +30,7 @@ function renderProducts(filteredProducts) {
         productList.innerHTML += productCard;
     });
 }
-
+// FESDKJLFSAEKLRAWEILRBJES
 // Función para cambiar la vista (lista o grid)
 function changeView(type) {
     viewType = type;
